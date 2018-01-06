@@ -1,0 +1,18 @@
+---
+- name: "Add Java repository to sources"
+  action: "apt_repository repo='ppa:webupd8team/java'"
+- 
+  action: "shell echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
+  name: "Autoaccept license for Java"
+      
+- name: Update APT package cache
+  action: apt update_cache=yes
+- 
+  apt: "pkg=oracle-java8-installer state=latest install_recommends=yes"
+  name: "Install Java 8"
+- 
+  apt: "pkg=oracle-java8-set-default state=latest install_recommends=y"
+  name: "Set Java 8 Env"
+
+- name: ADD Environment Variables     
+  lineinfile: "dest=/etc/environment  regexp=^JAVA_HOME=  line=JAVA_HOME=/usr/lib/jvm/java-8-oracle"

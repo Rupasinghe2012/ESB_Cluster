@@ -1,0 +1,9 @@
+--- 
+- 
+  hosts: MB
+  become: true
+  become_user: root
+  roles:
+    - JAVA8
+    - esb_setup
+
